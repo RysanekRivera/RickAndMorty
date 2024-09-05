@@ -78,15 +78,10 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = uiEvent) {
                 when (val event = uiEvent) {
-
-                    is UiEvent.ShowSnackBar ->  listener?.onShowSnackBar(event.message, scope, snackBarState)
-                    is UiEvent.ShowAlertDialog -> listener?.onShowAlertDialog(
-                        message = event.message,
-                        positiveText = "OK",
-                    )
                     is UiEvent.NavigateToCharacter -> navController.navigate("character/${event.characterId}")
-                    else -> {}
-
+                    is UiEvent.ShowSnackBar ->  listener?.onShowSnackBar(event.message, scope, snackBarState)
+                    is UiEvent.ShowAlertDialog -> listener?.onShowAlertDialog(message = event.message, positiveText = getString(R.string.ok))
+                    else -> Unit
                 }
             }
 
@@ -110,7 +105,7 @@ class MainActivity : ComponentActivity() {
 
                             composable("home"){
                                 HandleCharactersState(
-                                    onClickCharacter = { id -> navController.navigate("character/$id") },
+                                    onClickCharacter = { id -> viewModel.onNavigateToCharacter(id) },
                                     onLoadNextPage = viewModel::onLoadNextPage
                                 )
                             }
@@ -144,7 +139,6 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         listener = provideRickAndMortyListener()
-
     }
 
     override fun onPause() {
