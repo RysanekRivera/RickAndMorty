@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="11">
+      <module name="Essentials.app" target="21" />
+      <module name="Essentials.common.common-core" target="21" />
+      <module name="Essentials.common.common-ui" target="21" />
+      <module name="Essentials.feature.feature-characters" target="21" />
+      <module name="Essentials.navigation.navigation-core" target="21" />
+      <module name="Essentials.network.network-core" target="21" />
+      <module name="network-utils" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
