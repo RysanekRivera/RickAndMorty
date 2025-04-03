@@ -1,4 +1,4 @@
-<div align="center", style="display: flex; overflow-x: auto; white-space: nowrap;"><img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%20icon.png" alt="Image 1" style="width: 100px; height: 110px;"></div>
+<div align="center", style="display: flex; overflow-x: auto; white-space: nowrap;"><img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_icon.png" alt="Image 1" style="width: 100px; height: 110px;"></div>
 
 # <p align="center">Rick And Morty</p>
 
@@ -35,19 +35,19 @@ This project reflects industry standards for building scalable, maintainable, an
 ## Images
 
 <p align="center">
-  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%201.png" width="45%" />
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_1.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%202.png" width="45%" />
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_2.png" width="45%" />
   &nbsp;
-  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%205.png" width="45%" />
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_5.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%203.png" width="45%" />
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_3.png" width="45%" />
   &nbsp;
-  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick%20and%20morty%204.png" width="45%" />
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_4.png" width="45%" />
 </p>
 
 
