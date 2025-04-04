@@ -56,7 +56,7 @@ fun LeftNavigationRail(
     NavigationRail(
         modifier = Modifier
             .fillMaxHeight()
-            .width(72.dp)
+            .width(80.dp)
     ) {
         Box(
             modifier = Modifier

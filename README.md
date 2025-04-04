@@ -50,4 +50,16 @@ This project reflects industry standards for building scalable, maintainable, an
   <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_4.png" width="45%" />
 </p>
 
+<p align="center">
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_landscape_1.png" width="95%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_landscape_2.png" width="95%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/RysanekRivera/RickAndMorty/blob/master/app/src/main/res/drawable/rick_and_morty_landscape_3.png" width="95%" />
+</p>
+
 
