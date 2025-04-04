@@ -2,4 +2,6 @@
 <resources>
     <string name="character_s_image">character\'s image</string>
     <string name="character_image">Character Image</string>
+    <string name="characters">Characters</string>
+    <string name="search">Search</string>
 </resources>

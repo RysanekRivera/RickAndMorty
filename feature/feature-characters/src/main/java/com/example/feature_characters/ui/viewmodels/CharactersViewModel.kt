@@ -185,5 +185,4 @@ class CharactersViewModel @Inject constructor(
             }
         }
     }
-
 }

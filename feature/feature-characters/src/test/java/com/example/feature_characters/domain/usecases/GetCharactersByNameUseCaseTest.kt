@@ -1,10 +1,9 @@
-package com.example.feature_characters.domain
+package com.example.feature_characters.domain.usecases
 
 import com.example.feature_characters.data.models.AllCharactersResponse
 import com.example.feature_characters.data.models.Character
 import com.example.feature_characters.data.models.Info
 import com.example.feature_characters.domain.repositories.RickAndMortyRepository
-import com.example.feature_characters.domain.usecases.GetAllCharactersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -23,17 +22,17 @@ import org.mockito.Mockito.`when`
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-class GetAllCharactersUseCaseTest {
+class GetCharactersByNameUseCaseTest {
 
     private val repository: RickAndMortyRepository = mock()
-    private lateinit var useCase: GetAllCharactersUseCase
+    private lateinit var useCase: GetCharactersByNameUseCase
 
     private val testDispatcher = StandardTestDispatcher()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        useCase = GetAllCharactersUseCase(repository)
+        useCase = GetCharactersByNameUseCase(repository)
     }
 
     @After
@@ -43,24 +42,25 @@ class GetAllCharactersUseCaseTest {
 
     @Test
     fun `fetchData should return successful response`() = runTest {
+        val name = "Rick"
         val page = 1
 
+        `when`(repository.getCharacterByName(name, page)).thenReturn(mockSuccessResponse)
 
-        `when`(repository.getAllCharacters(page)).thenReturn(mockSuccessResponse)
-
-        val result = useCase.fetchData(page)
+        val result = useCase.fetchData(name, page)
 
         assertEquals(mockSuccessResponse, result)
-        verify(repository).getAllCharacters(page)
+        verify(repository).getCharacterByName(name, page)
     }
 
     @Test
     fun `fetchData should return error response`() = runTest {
+        val name = "Rick"
         val page = 1
         val errorResponse = Response.error<AllCharactersResponse>(404, "Not Found".toResponseBody())
-        `when`(repository.getAllCharacters(page)).thenReturn(errorResponse)
+        `when`(repository.getCharacterByName(name, page)).thenReturn(errorResponse)
 
-        val result = useCase.fetchData(page)
+        val result = useCase.fetchData(name, page)
 
         assertEquals(errorResponse.code(), result.code())
         assertFalse(result.isSuccessful)
@@ -69,30 +69,30 @@ class GetAllCharactersUseCaseTest {
     private val mockSuccessResponse = Response.success(
         AllCharactersResponse(
             info = Info(
-                2,
+                count = 2,
                 next = "2",
                 pages = 2,
                 prev = null
             ),
             characters = listOf(
                 Character(
-                    id = 21,
-                    name = "Aqua Morty",
-                    status = "unknown",
-                    species = "Humanoid",
-                    type = "Fish Person",
+                    id = 1,
+                    name = "Rick Sanchez",
+                    status = "Alive",
+                    species = "Human",
+                    type = "",
                     gender = "Male",
-                    image = "https://rickandmortyapi.com/api/character/avatar/21.jpeg"
+                    image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg"
                 ),
                 Character(
-                    id = 21,
-                    name = "Aqua Rick",
-                    status = "unknown",
-                    species = "Humanoid",
-                    type = "Fish Person",
+                    id = 2,
+                    name = "Rick D. Sanchez",
+                    status = "Alive",
+                    species = "Human",
+                    type = "Scientist",
                     gender = "Male",
-                    image = "https://rickandmortyapi.com/api/character/avatar/21.jpeg"
-                ),
+                    image = "https://rickandmortyapi.com/api/character/avatar/2.jpeg"
+                )
             )
         )
     )

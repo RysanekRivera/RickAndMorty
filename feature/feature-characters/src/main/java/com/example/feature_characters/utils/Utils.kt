@@ -1,9 +1,18 @@
 package com.example.feature_characters.utils
 
+import android.content.res.Configuration
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import com.rysanek.common_exceptions.SuccessNoResponseException
 import com.rysanek.common_ui.state.UiState
 import com.rysanek.network_utils.NetworkResult
 import retrofit2.Response
+
+@Composable
+fun isLandscape(): Boolean {
+    val configuration = LocalConfiguration.current
+    return configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+}
 
 fun <T> UiState<T>.updateUiStateFromNetworkResult(networkResult: NetworkResult<T>): UiState<T> = when (networkResult) {
     is NetworkResult.Success -> {

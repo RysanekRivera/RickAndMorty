@@ -1,5 +1,6 @@
 package com.example.feature_characters.screens
 
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -33,12 +34,13 @@ class AllCharactersScreenTest {
                 isLoadingMore = false,
                 isLoading = false,
                 isWaitingForNetwork = false,
-                onLoadMore = {}
+                onLoadMore = {},
+                gridState = rememberLazyGridState()
             )
         }
 
-        composeTestRule.onNodeWithTag("character_row_0").assertIsDisplayed()
-        composeTestRule.onNodeWithTag("character_row_1").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("character_card_0").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("character_card_1").assertIsDisplayed()
     }
 
     @Test
@@ -51,7 +53,8 @@ class AllCharactersScreenTest {
                 isLoadingMore = true,
                 isLoading = false,
                 isWaitingForNetwork = false,
-                onLoadMore = {}
+                onLoadMore = {},
+                gridState = rememberLazyGridState()
             )
         }
 
@@ -60,3 +63,4 @@ class AllCharactersScreenTest {
             .assertIsDisplayed()
     }
 }
+
