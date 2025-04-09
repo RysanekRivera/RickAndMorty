@@ -1,6 +1,5 @@
 package com.example.feature_characters.screens
 
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
@@ -57,9 +56,3 @@ val allCharacterScreens = listOf(
     CharacterScreen.AllCharacters,
     CharacterScreen.CharacterDetail
 )
-
-fun determineStartDestination(savedInstanceState: Bundle?): String = when {
-    allCharacterScreens.size == 1 -> allCharacterScreens.first().route
-    allCharacterScreens.size > 1 -> if (savedInstanceState != null) allCharacterScreens[1].route else allCharacterScreens.first().route
-    else -> throw IllegalArgumentException("allCharacterScreens cannot be empty")
-}

@@ -59,12 +59,13 @@ data class SearchUiState(
         return if (response.isSuccessful && body != null) {
             copy(
                 isLoading = false,
+                isLoadingMore = false,
                 characters = characters + body.characters,
                 nextPage = body.extractNextPage(),
                 info = body.info
             )
         } else {
-            copy(isLoading = false)
+            copy(isLoading = false, isLoadingMore = false)
         }
     }
 }
@@ -112,13 +113,13 @@ class CharactersViewModel @Inject constructor(
         }
     }
 
-    fun onLoadMore() = viewModelScope.launch{
-        try {
-            if (nextPage.value != null && !_isLoadingMore.value) {
+    fun onLoadMore() {
+        if (nextPage.value != null && !_isLoadingMore.value) {
 
-                _isLoadingMore.value = true
+            _isLoadingMore.value = true
 
-                viewModelScope.launchWithInternetConnectivity(Dispatchers.IO) {
+            viewModelScope.launchWithInternetConnectivity {
+                try {
                     val result = getAllCharactersUseCase.fetchData(nextPage.value!!)
 
                     if (result.isSuccessful && result.body() != null) {
@@ -136,26 +137,27 @@ class CharactersViewModel @Inject constructor(
 
                         nextPage.update { allCharactersResponse.extractNextPage() }
                     }
+                } catch (e: Throwable) {
+                    events.send(UiEvent.ShowSnackBar("Error Loading More: ${e.message}"))
+                } finally {
+                    _isLoadingMore.value = false
                 }
             }
-        } catch (e: Throwable) {
-            events.send(UiEvent.ShowSnackBar("Error Loading More: ${e.message}"))
-        } finally {
-            _isLoadingMore.value = false
         }
     }
 
-    fun onLoadMoreFromSearch() = viewModelScope.launch {
-        try {
-            _searchState.update { it.markIsLoadingMore() }
-            viewModelScope.launchWithInternetConnectivity(Dispatchers.IO) {
+    fun onLoadMoreFromSearch() {
+        _searchState.update { it.markIsLoadingMore() }
+        viewModelScope.launchWithInternetConnectivity {
+            try {
                 _searchState.update {
                     it.updateFromLoadMoreResponse(getCharactersByNameUseCase.fetchData(page = it.nextPage, name = it.query))
                 }
+            } catch (e: Throwable) {
+                _searchState.update { it.copy(isLoading = false) }
+                events.send(UiEvent.ShowSnackBar("Error Loading More Search Results: ${e.message}"))
+
             }
-        } catch (e: Throwable) {
-            _searchState.update { it.copy(isLoading = false) }
-            events.send(UiEvent.ShowSnackBar("Error Loading More Search Results: ${e.message}"))
         }
     }
 

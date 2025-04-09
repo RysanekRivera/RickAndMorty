@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -35,7 +36,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,16 +65,17 @@ fun AllCharactersScreen(
     val state by viewModel.getAllCharactersState.collectAsStateWithLifecycle()
     val isLoadingMore by viewModel.isLoadingMore.collectAsStateWithLifecycle()
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
-    val query = remember(searchState.query) { searchState.query }
+    val query = searchState.query
     val events = viewModel.events
-    val hasNextPage = remember(state.successData) { state.successData?.hasNextPage == true}
-    val hasNextSearchResultsPage = remember(searchState) { searchState.hasNextPage() }
-    val error by rememberUpdatedState(state.error)
+    val hasNextPage = state.successData?.hasNextPage == true
+    val hasNextSearchResultsPage = searchState.hasNextPage()
+    val error = state.error
     val isLoading =  state.isLoading
     val isLoadingSearch = searchState.isLoading
-    val isWaitingForNetwork = remember(state) { state.isWaitingForNetwork }
-    val allCharacters = remember(state) { state.successData?.characters ?: emptyList() }
-    val searchCharacters = remember(searchState) { searchState.characters }
+    val isLoadingMoreSearch = searchState.isLoadingMore
+    val isWaitingForNetwork = state.isWaitingForNetwork
+    val allCharacters = state.successData?.characters ?: emptyList()
+    val searchCharacters = searchState.characters
     val snackBarHostState = remember { SnackbarHostState() }
     val allCharactersGridState = rememberLazyGridState()
     val searchGridState = rememberLazyGridState()
@@ -147,7 +148,7 @@ fun AllCharactersScreen(
                                 searchCharacters,
                                 hasNextSearchResultsPage,
                                 onNavigateToCharacterDetails,
-                                isLoadingMore,
+                                isLoadingMoreSearch,
                                 isLoadingSearch,
                                 false,
                                 viewModel::onLoadMoreFromSearch,
@@ -160,6 +161,8 @@ fun AllCharactersScreen(
         }
     }
 }
+
+private const val PAGINATION_TRIGGER_OFFSET = 3
 
 @Composable
 fun CharactersList(
@@ -185,7 +188,9 @@ fun CharactersList(
     ) {
         itemsIndexed(allCharacters) { i, character ->
             LaunchedEffect(i) {
-                if (i == allCharacters.lastIndex && hasNextPage) onLoadMore()
+                if (hasNextPage && i == allCharacters.lastIndex - PAGINATION_TRIGGER_OFFSET){
+                    onLoadMore()
+                }
             }
 
             CharacterCard(
@@ -195,8 +200,8 @@ fun CharactersList(
             )
         }
 
-        if (isLoadingMore) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            if (isLoadingMore) {
                 LoadingMoreIndicator()
             }
         }
@@ -298,6 +303,7 @@ fun LoadingMoreIndicator() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp)
+            .height(200.dp)
             .semantics { contentDescription = "Loading more characters" }
             .testTag("loading_more_indicator"),
         contentAlignment = Alignment.Center

@@ -7,8 +7,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.navigation_core.screen.RegisterComposable
 
 @Composable
-fun CentralNavHost(startDestination: String, screensList: List<RegisterComposable>, navController: NavHostController = rememberNavController()) {
-    NavHost(navController, startDestination = startDestination){
+fun CentralNavHost(screensList: List<RegisterComposable>, navController: NavHostController = rememberNavController()) {
+    NavHost(navController, startDestination = screensList.first().route){
         screensList.forEach { screen ->
             screen.registerComposable(navController, this)
         }
